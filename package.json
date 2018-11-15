@@ -1,0 +1,24 @@
+{
+  "name": "koa_gulp_template",
+  "version": "0.1.0",
+  "description": "Template for a Node/Koa Web app using Gulp",
+  "main": "server/web.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/davidand36/Koa_Gulp_Template.git"
+  },
+  "keywords": [
+    "Node",
+    "Koa",
+    "Gulp"
+  ],
+  "author": "David M. Anderson",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/davidand36/Koa_Gulp_Template/issues"
+  },
+  "homepage": "https://github.com/davidand36/Koa_Gulp_Template#readme"
+}
