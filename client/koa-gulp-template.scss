@@ -1,0 +1,11 @@
+//  koa-gulp-template.scss
+//
+//  Main style-sheet for this app
+//  See http://sass-lang.com/
+
+@import 'scss/colors';
+
+body {
+    background-color: $background-color;
+    color: $text-color;
+}
