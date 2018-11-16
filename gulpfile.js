@@ -48,7 +48,12 @@ function copyMedia( ) {
 
 const processMedia = parallel( copyMedia );
 
-const buildClient = parallel( copyHtml, processScss, processMedia );
+function copyJs( ) {
+    return src( 'client/**/*.js' )
+        .pipe( dest( 'public/' ) );
+}
+
+const buildClient = parallel( copyHtml, processScss, processMedia, copyJs );
 
 exports.clean = cleanPublic;
 exports.default = series( cleanPublic, buildClient );
