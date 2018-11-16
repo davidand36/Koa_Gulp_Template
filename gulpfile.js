@@ -18,17 +18,24 @@ function cleanPublic( ) {
     return del( [ 'public/' ] );
 }
 
-function processHtml( ) {
+function copyHtml( ) {
     return src( 'client/**/*.html' )
         .pipe( replace( '@@version@@', package.version ) )
         .pipe( dest( 'public/' ) );
 }
 
-function processCss( ) {
+function copyScss( ) {
     return src( 'client/**/*.scss' )
-        .pipe( sass().on( 'error', sass.logError ) )
-        .pipe( dest( 'public/' ) );
+        .pipe( dest( 'public/scss' ) );
 }
+
+function runSass( ) {
+    return src( 'public/scss/**/*.scss', { sourcemaps: true } )
+        .pipe( sass().on( 'error', sass.logError ) )
+        .pipe( dest( 'public/', { sourcemaps: 'maps/' } ) );
+}
+
+const processScss = series( copyScss, runSass );
 
 function copyMedia( ) {
     return src( [ 'client/**/*.svg', 'client/**/*.png', 'client/**/*.jpg', 'client/**/*.gif', 'client/**/*.ogg', 'client/**/*.opus', 'client/**/*.mp3', 'client/**/*.flac', 'client/**/*.weba', 'client/**/*.webm', 'client/**/*.mp4', 'client/**/*.ico' ],
@@ -41,7 +48,7 @@ function copyMedia( ) {
 
 const processMedia = parallel( copyMedia );
 
-const processClient = parallel( processHtml, processCss, processMedia );
+const buildClient = parallel( copyHtml, processScss, processMedia );
 
 exports.clean = cleanPublic;
-exports.default = series( cleanPublic, processClient );
+exports.default = series( cleanPublic, buildClient );
