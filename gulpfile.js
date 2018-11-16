@@ -8,8 +8,8 @@
     and https://www.npmjs.com/package/node-sass
 */
 
-const package = require( './package.json' );
 const { series, parallel, src, dest } = require( 'gulp' );
+const package = require( './package.json' );
 const del = require( 'del' );
 const replace = require( 'gulp-replace' );
 const sass = require( 'gulp-sass' );
@@ -30,7 +30,18 @@ function processCss( ) {
         .pipe( dest( 'public/' ) );
 }
 
-const processClient = parallel( processHtml, processCss );
+function copyMedia( ) {
+    return src( [ 'client/**/*.svg', 'client/**/*.png', 'client/**/*.jpg', 'client/**/*.gif', 'client/**/*.ogg', 'client/**/*.opus', 'client/**/*.mp3', 'client/**/*.flac', 'client/**/*.weba', 'client/**/*.webm', 'client/**/*.mp4', 'client/**/*.ico' ],
+        {
+            buffer: false,
+            resolveSymlinks: false
+        } )
+        .pipe( dest( 'public/' ) );
+}
+
+const processMedia = parallel( copyMedia );
+
+const processClient = parallel( processHtml, processCss, processMedia );
 
 exports.clean = cleanPublic;
 exports.default = series( cleanPublic, processClient );
