@@ -3,14 +3,17 @@
 
     See https://gulpjs.com/
     and https://www.npmjs.com/package/del
+    and https://www.npmjs.com/package/gulp-eslint
+    and https://eslint.org/
     and https://www.npmjs.com/package/gulp-replace
     and https://www.npmjs.com/package/gulp-sass
     and https://www.npmjs.com/package/node-sass
 */
 
 const { series, parallel, src, dest } = require( 'gulp' );
-const package = require( './package.json' );
+const pkg = require( './package.json' );
 const del = require( 'del' );
+const esLint = require( 'gulp-eslint' );
 const replace = require( 'gulp-replace' );
 const sass = require( 'gulp-sass' );
 
@@ -18,9 +21,25 @@ function cleanPublic( ) {
     return del( [ 'public/' ] );
 }
 
+function lintSystemJs( ) {
+    return src( '*.js' )
+        .pipe( esLint() )
+        .pipe( esLint.format() )
+        .pipe( esLint.failAfterError() );
+}
+
+function lintClientJs( ) {
+    return src( 'client/**/*.js' )
+        .pipe( esLint() )
+        .pipe( esLint.format() )
+        .pipe( esLint.failAfterError() );
+}
+
+const lint = parallel( lintSystemJs, lintClientJs );
+
 function copyHtml( ) {
     return src( 'client/**/*.html' )
-        .pipe( replace( '@@version@@', package.version ) )
+        .pipe( replace( '@@version@@', pkg.version ) )
         .pipe( dest( 'public/' ) );
 }
 
@@ -56,4 +75,5 @@ function copyJs( ) {
 const buildClient = parallel( copyHtml, processScss, processMedia, copyJs );
 
 exports.clean = cleanPublic;
-exports.default = series( cleanPublic, buildClient );
+exports.lint = lint;
+exports.default = series( lint, cleanPublic, buildClient );
