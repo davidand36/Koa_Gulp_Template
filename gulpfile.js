@@ -5,6 +5,8 @@
     and https://www.npmjs.com/package/del
     and https://www.npmjs.com/package/gulp-eslint
     and https://eslint.org/
+    and https://www.npmjs.com/package/gulp-htmlhint
+    and https://github.com/htmlhint/HTMLHint
     and https://www.npmjs.com/package/gulp-replace
     and https://www.npmjs.com/package/gulp-sass
     and https://www.npmjs.com/package/node-sass
@@ -13,6 +15,7 @@
 const { series, parallel, src, dest } = require( 'gulp' );
 const pkg = require( './package.json' );
 const del = require( 'del' );
+const htmlHint = require( 'gulp-htmlhint' );
 const esLint = require( 'gulp-eslint' );
 const replace = require( 'gulp-replace' );
 const sass = require( 'gulp-sass' );
@@ -28,6 +31,12 @@ function lintSystemJs( ) {
         .pipe( esLint.failAfterError() );
 }
 
+function lintHtml( ) {
+    return src( 'client/**/*.html' )
+        .pipe( htmlHint() )
+        .pipe( htmlHint.failAfterError() );
+}
+
 function lintClientJs( ) {
     return src( 'client/**/*.js' )
         .pipe( esLint() )
@@ -35,7 +44,7 @@ function lintClientJs( ) {
         .pipe( esLint.failAfterError() );
 }
 
-const lint = parallel( lintSystemJs, lintClientJs );
+const lint = parallel( lintSystemJs, lintHtml, lintClientJs );
 
 function copyHtml( ) {
     return src( 'client/**/*.html' )
