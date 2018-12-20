@@ -21,6 +21,7 @@
     "url": "https://github.com/davidand36/Koa_Gulp_Template/issues"
   },
   "homepage": "https://github.com/davidand36/Koa_Gulp_Template#readme",
+  "dependencies": {},
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "^4.0.0",
@@ -28,6 +29,7 @@
     "gulp-htmlhint": "^2.2.1",
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
+    "gulp-sass-lint": "^1.4.0",
     "node-sass": "^4.10.0"
   }
 }
