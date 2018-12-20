@@ -7,6 +7,7 @@
     and https://koajs.com/
     and https://www.npmjs.com/package/koa-favicon
     and https://www.npmjs.com/package/koa-logger
+    and https://www.npmjs.com/package/koa-compress
     and https://www.npmjs.com/package/koa-static
 */
 
@@ -14,12 +15,14 @@ require( 'dotenv' ).config( );
 const Koa = require( 'koa' );
 const favicon = require( 'koa-favicon' );
 const logger = require( 'koa-logger' );
+const compress = require( 'koa-compress' );
 const static = require( 'koa-static' );
 
 const koa = new Koa( );
 
 koa.use( favicon( __dirname + '/public/favicon.ico' ) );
 koa.use( logger( ) );
+koa.use( compress( ) );
 koa.use( static( './public') );
 
 const port = process.env.WEB_PORT || 80;
