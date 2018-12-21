@@ -19,6 +19,7 @@ const favicon = require( 'koa-favicon' );
 const logger = require( 'koa-logger' );
 const compress = require( 'koa-compress' );
 const static = require( 'koa-static' );
+const routerExample = require( './routerExample' );
 
 const koa = new Koa( );
 
@@ -26,6 +27,8 @@ koa.use( helmet( ) );
 koa.use( favicon( __dirname + '/public/favicon.ico' ) );
 koa.use( logger( ) );
 koa.use( compress( ) );
+koa.use( routerExample.routes() );
+koa.use( routerExample.allowedMethods() );
 koa.use( static( './public') );
 
 const port = process.env.WEB_PORT || 80;
