@@ -12,8 +12,6 @@ const koaBody = require( 'koa-body' );
 
 const router = new Router( );
 
-router.prefix( '/api/v1');
-
 router.get( '/', getAll );
 router.get( '/:id', getOne );
 router.post( '/', koaBody(), create );

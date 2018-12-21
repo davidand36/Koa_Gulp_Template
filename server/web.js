@@ -9,6 +9,7 @@
     and https://www.npmjs.com/package/koa-favicon
     and https://www.npmjs.com/package/koa-logger
     and https://www.npmjs.com/package/koa-compress
+    and https://www.npmjs.com/package/koa-router
     and https://www.npmjs.com/package/koa-static
 */
 
@@ -18,19 +19,21 @@ const helmet = require( 'koa-helmet' );
 const favicon = require( 'koa-favicon' );
 const logger = require( 'koa-logger' );
 const compress = require( 'koa-compress' );
+const Router = require( 'koa-router' );
 const static = require( 'koa-static' );
 const routerExample = require( './routerExample' );
 
 const koa = new Koa( );
+const router = new Router( );
 
 koa.use( helmet( ) );
 koa.use( favicon( __dirname + '/public/favicon.ico' ) );
 koa.use( logger( ) );
 koa.use( compress( ) );
-koa.use( routerExample.routes() );
-koa.use( routerExample.allowedMethods() );
+router.use( '/api/v1', routerExample.routes(), routerExample.allowedMethods() );
+koa.use( router.routes() ).use( router.allowedMethods() );
 koa.use( static( './public') );
 
-const port = process.env.WEB_PORT || 80;
+const port = process.env.WEB_PORT || process.env.PORT || 80;
 koa.listen( port );
 console.log( 'Listening on port ', port );
