@@ -35,17 +35,17 @@ function getOne( ctx ) {
 
 function create( ctx ) {
     const newThing = Object.assign( { 
-            id: 1001
-        }, 
-        ctx.request.body );
+        id: 1001
+    },
+    ctx.request.body );
     ctx.response.body = newThing;
 }
 
 function update( ctx ) {
     const updatedThing = Object.assign( { 
-            id: ctx.params.id
-        },
-        ctx.request.body );
+        id: ctx.params.id
+    },
+    ctx.request.body );
     ctx.response.body = updatedThing;
 }
 

@@ -34,6 +34,13 @@ function lintSystemJs( ) {
         .pipe( esLint.failAfterError() );
 }
 
+function lintServerJs( ) {
+    return src( 'server/**/*.js' )
+        .pipe( esLint() )
+        .pipe( esLint.format() )
+        .pipe( esLint.failAfterError() );
+}
+
 function lintHtml( ) {
     return src( 'client/**/*.html' )
         .pipe( htmlHint() )
@@ -54,7 +61,7 @@ function lintClientJs( ) {
         .pipe( esLint.failAfterError() );
 }
 
-const lint = parallel( lintSystemJs, lintHtml, lintSass, lintClientJs );
+const lint = parallel( lintSystemJs, lintServerJs, lintHtml, lintSass, lintClientJs );
 
 function copyHtml( ) {
     return src( 'client/**/*.html' )

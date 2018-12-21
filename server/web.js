@@ -20,7 +20,7 @@ const favicon = require( 'koa-favicon' );
 const logger = require( 'koa-logger' );
 const compress = require( 'koa-compress' );
 const Router = require( 'koa-router' );
-const static = require( 'koa-static' );
+const koaStatic = require( 'koa-static' );
 const routerExample = require( './routerExample' );
 
 const koa = new Koa( );
@@ -32,7 +32,7 @@ koa.use( logger( ) );
 koa.use( compress( ) );
 router.use( '/api/v1', routerExample.routes(), routerExample.allowedMethods() );
 koa.use( router.routes() ).use( router.allowedMethods() );
-koa.use( static( './public') );
+koa.use( koaStatic( './public') );
 
 const port = process.env.WEB_PORT || process.env.PORT || 80;
 koa.listen( port );
