@@ -9,51 +9,46 @@
 
 const Router = require( 'koa-router' );
 const koaBody = require( 'koa-body' );
+const dbService = require( './serviceExample' )
 
 const router = new Router( );
 
 router.get( '/', getAll );
-router.get( '/:id', getOne );
+router.get( '/:id', getById );
 router.post( '/', koaBody(), create );
 router.put( '/:id', koaBody(), update );
-router.delete( '/:id', destroy );
+router.delete( '/:id', remove );
 
 async function getAll( ctx ) {
-    ctx.response.body = [
-        'all',
-        'the',
-        'things'
-    ];
+    ctx.response.body = dbService.getAll( );
 }
 
-function getOne( ctx ) {
-    ctx.response.body = {
-        id: ctx.params.id,
-        name: 'a thing'
-    };
+function getById( ctx ) {
+    const item = dbService.getById( ctx.params.id );
+    if ( item ) {
+        ctx.response.body = item;
+    } else {
+        ctx.response.status = 404;
+    }
 }
 
 function create( ctx ) {
-    const newThing = Object.assign( { 
-        id: 1001
-    },
-    ctx.request.body );
-    ctx.response.body = newThing;
+    const item = dbService.create( ctx.request.body );
+    ctx.response.body = item;
 }
 
 function update( ctx ) {
-    const updatedThing = Object.assign( { 
-        id: ctx.params.id
-    },
-    ctx.request.body );
-    ctx.response.body = updatedThing;
+    const item = dbService.update( ctx.params.id, ctx.request.body );
+    if ( item ) {
+        ctx.response.body = item;
+    } else {
+        ctx.response.status = 404;
+    }
 }
 
-function destroy( ctx ) {
-    ctx.response.body = {
-        id: ctx.params.id,
-        result: 'deleted'
-    };
+function remove( ctx ) {
+    const result = dbService.remove( ctx.params.id );
+    ctx.response.status = result ? 200 : 500;
 }
 
 module.exports = router;
