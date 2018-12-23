@@ -21,7 +21,7 @@ const logger = require( 'koa-logger' );
 const compress = require( 'koa-compress' );
 const Router = require( 'koa-router' );
 const koaStatic = require( 'koa-static' );
-const routerExample = require( './routerExample' );
+const routerExample = require( './example/routerExample' );
 
 const koa = new Koa( );
 const router = new Router( );
