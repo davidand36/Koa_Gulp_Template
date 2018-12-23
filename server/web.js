@@ -27,7 +27,7 @@ const koa = new Koa( );
 const router = new Router( );
 
 koa.use( helmet( ) );
-koa.use( favicon( __dirname + '/public/favicon.ico' ) );
+koa.use( favicon( './public/favicon.ico' ) );
 koa.use( logger( ) );
 koa.use( compress( ) );
 router.use( '/api/v1', routerExample.routes(), routerExample.allowedMethods() );
