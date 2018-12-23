@@ -20,11 +20,11 @@ router.put( '/:id', koaBody(), update );
 router.delete( '/:id', remove );
 
 async function getAll( ctx ) {
-    ctx.response.body = dbService.getAll( );
+    ctx.response.body = await dbService.getAll( );
 }
 
-function getById( ctx ) {
-    const item = dbService.getById( ctx.params.id );
+async function getById( ctx ) {
+    const item = await dbService.getById( ctx.params.id );
     if ( item ) {
         ctx.response.body = item;
     } else {
@@ -32,13 +32,13 @@ function getById( ctx ) {
     }
 }
 
-function create( ctx ) {
-    const item = dbService.create( ctx.request.body );
+async function create( ctx ) {
+    const item = await dbService.create( ctx.request.body );
     ctx.response.body = item;
 }
 
-function update( ctx ) {
-    const item = dbService.update( ctx.params.id, ctx.request.body );
+async function update( ctx ) {
+    const item = await dbService.update( ctx.params.id, ctx.request.body );
     if ( item ) {
         ctx.response.body = item;
     } else {
@@ -46,8 +46,8 @@ function update( ctx ) {
     }
 }
 
-function remove( ctx ) {
-    const result = dbService.remove( ctx.params.id );
+async function remove( ctx ) {
+    const result = await dbService.remove( ctx.params.id );
     ctx.response.status = result ? 200 : 500;
 }
 
