@@ -32,7 +32,7 @@ function update( id, data ) {
         return null;
     }
     const theElement = db[ index ];
-    Object.assign( theElement, data, { id: id } );
+    Object.assign( theElement, data, { id: +id } );
     return theElement;
 }
 
