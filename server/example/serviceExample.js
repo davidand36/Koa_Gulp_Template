@@ -46,10 +46,15 @@ function remove( id ) {
     return true;
 }
 
+function removeAll( ) {
+    db.splice( 0, db.length );
+}
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
-    remove
+    remove,
+    removeAll
 };

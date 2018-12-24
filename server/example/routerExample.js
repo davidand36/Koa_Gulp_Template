@@ -9,7 +9,7 @@
 
 const Router = require( 'koa-router' );
 const koaBody = require( 'koa-body' );
-const dbService = require( './serviceExample' )
+const dbService = require( './serviceExample' );
 
 const router = new Router( );
 
