@@ -18,7 +18,7 @@ describe( 'serviceExample', function( ) {
         await dbService.removeAll( );
     } );
 
-    describe( 'create', function( ) {
+    describe( 'create', async function( ) {
         it( 'adds an item to the DB', async function( ) {
             const data = {
                 name: 'Item 1',
@@ -32,13 +32,15 @@ describe( 'serviceExample', function( ) {
     } );
 
     describe( 'getAll', async function( ) {
-        await dbService.create( {
-            name: 'Item 1',
-            size: 10
-        } );
-        await dbService.create( {
-            name: 'Item 2',
-            size: 20
+        beforeEach( async function( ) {
+            await dbService.create( {
+                name: 'Item 1',
+                size: 10
+            } );
+            await dbService.create( {
+                name: 'Item 2',
+                size: 20
+            } );
         } );
 
         it( 'gets all items in the DB', async function( ) {
