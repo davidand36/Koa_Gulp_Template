@@ -102,4 +102,5 @@ const buildClient = parallel( copyHtml, processScss, processMedia, copyJs );
 
 exports.clean = cleanPublic;
 exports.lint = lint;
-exports.default = series( lint, cleanPublic, buildClient );
+exports.dev = series( lint, cleanPublic, buildClient );
+exports.default = exports.dev;

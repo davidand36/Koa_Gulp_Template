@@ -2,9 +2,15 @@
   "name": "koa_gulp_template",
   "version": "0.1.0",
   "description": "Template for a Node/Koa Web app using Gulp",
+  "engine": {
+    "node": "10.x"
+  },
   "main": "server/web.js",
   "scripts": {
-    "test": "gulp test"
+    "postinstall": "gulp dev",
+    "start": "node server/web.js",
+    "build": "",
+    "test": "nyc mocha --recursive server/**/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -43,6 +49,7 @@
     "gulp-sass-lint": "^1.4.0",
     "mocha": "^5.2.0",
     "node-sass": "^4.10.0",
+    "nyc": "^13.1.0",
     "request-promise-native": "^1.0.5"
   }
 }
