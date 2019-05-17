@@ -22,6 +22,8 @@ const esLint = require( 'gulp-eslint' );
 const sassLint = require( 'gulp-sass-lint' );
 const replace = require( 'gulp-replace' );
 const sass = require( 'gulp-sass' );
+const handlebars = require( 'gulp-handlebars' );
+const defineModule = require( 'gulp-define-module' );
 
 function cleanPublic( ) {
     return del( [ 'public/' ] );
@@ -55,7 +57,7 @@ function lintSass( ) {
 }
 
 function lintClientJs( ) {
-    return src( 'client/**/*.js' )
+    return src( 'client/**/*.js, !client/lib' )
         .pipe( esLint() )
         .pipe( esLint.format() )
         .pipe( esLint.failAfterError() );
@@ -98,7 +100,18 @@ function copyJs( ) {
         .pipe( dest( 'public/' ) );
 }
 
-const buildClient = parallel( copyHtml, processScss, processMedia, copyJs );
+function handlebarTemplates( ) {
+    return src( 'client/**/*.hbs')
+        .pipe( handlebars( ) )
+        .pipe( defineModule( 'es6',
+            //At least for now, Handlebars is global
+            { require: { Handlebars: null } } ) )
+        .pipe( dest( 'public/') );
+}
+
+const processTemplates = parallel( handlebarTemplates );
+
+const buildClient = parallel( copyHtml, processScss, processMedia, copyJs, processTemplates );
 
 exports.clean = cleanPublic;
 exports.lint = lint;

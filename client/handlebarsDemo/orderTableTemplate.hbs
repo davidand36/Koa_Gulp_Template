@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Billing address</th>
+    <th>Shipping address</th>
+    <th>Phone</th>
+  </thead>
+  <tbody>
+    {{#each orders}}
+    <tr>
+      <td>{{name}}</td>
+      <td>{{>address billingAddress}}</td>
+      <td>
+        {{#if shippingAddress}}
+          {{>address shippingAddress}}
+        {{else}}
+          Same as billing
+        {{/if}}
+      </td>
+      <td>{{formatPhone phone}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
