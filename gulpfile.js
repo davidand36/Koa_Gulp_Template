@@ -12,6 +12,8 @@
     and https://www.npmjs.com/package/gulp-replace
     and https://www.npmjs.com/package/gulp-sass
     and https://www.npmjs.com/package/node-sass
+    and https://www.npmjs.com/package/gulp-handlebars
+    and https://www.npmjs.com/package/gulp-define-module
 */
 
 const { series, parallel, src, dest } = require( 'gulp' );
